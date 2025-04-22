@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdf-downloader-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pdf-downloader
+  template:
+    metadata:
+      labels:
+        app: pdf-downloader
+    spec:
+      containers:
+      - name: pdf-downloader
+        image: pdf-downloader-image:latest  # Use a imagem que você criou com Dockerfile
+        imagePullPolicy: Never              # Para usar imagem local
+        resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "200m"
