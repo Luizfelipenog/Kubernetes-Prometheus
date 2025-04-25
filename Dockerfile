@@ -8,7 +8,7 @@ WORKDIR /app
 COPY WebScraping.py /app/WebScraping.py
 
 # Instala as dependências necessárias
-RUN pip install requests beautifulsoup4
+RUN pip install --no-cache-dir requests beautifulsoup4
 
-# Comando para rodar o script Python e manter o contêiner ativo
-CMD ["sh", "-c", "python3 WebScraping.py && tail -f /dev/null"]
+# Comando para rodar o script Python
+CMD ["python3", "WebScraping.py"]

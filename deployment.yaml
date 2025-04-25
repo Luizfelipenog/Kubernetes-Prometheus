@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: pdf-downloader-deployment
 spec:
-  replicas: 2
+  replicas: 2  # Certifique-se de que há 2 réplicas
   selector:
     matchLabels:
       app: pdf-downloader
@@ -14,10 +14,20 @@ spec:
     spec:
       containers:
       - name: pdf-downloader
-        image: pdf-downloader-image:latest  # Use a imagem que você criou com Dockerfile
-        imagePullPolicy: Never              # Para usar imagem local
+        image: pdf-downloader-image:latest  # Imagem correta
+        imagePullPolicy: IfNotPresent  # Melhor usar 'IfNotPresent' para evitar o download repetido
+        ports:
+        - containerPort: 80
         resources:
           requests:
             cpu: "100m"
+            memory: "128Mi"
           limits:
             cpu: "200m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: pdf-storage
+          mountPath: /app/downloads
+      volumes:
+      - name: pdf-storage
+        emptyDir: {}
